@@ -13,14 +13,22 @@ public class HomeController : Controller
     }
 
     public IActionResult Index(){
+        BD.LevantarPartidos();
+        ViewBag.ListaPartidos = BD.ListarPartidos();
         return View();
     }
 
-    public IActionResult VerDetalleCandidato(){
-        return View();   
+    [HttpPost]
+    public IActionResult VerDetallePartido(int idPartido){
+        BD.LevantarPartidos();
+        ViewBag.infoPartido = BD.VerInfoPartido(idPartido);
+        return View();
     }
 
-    public IActionResult VerDetallePartido(){
+    [HttpPost]
+    public IActionResult VerDetalleCandidato(int idCandidato){
+        BD.LevantarCandidatos();
+        ViewBag.infoCandidato = BD.VerInfoCandidato(idCandidato);
         return View();
     }
 
@@ -28,8 +36,20 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult GuardarCandidato(int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion){
+        BD.AgregarCandidato(new Candidato(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion));
+        return RedirectToAction("VerDetallePartido", new { idPartido = idPartido });
+    }
+
     public IActionResult AgregarPartido(){
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult GuardarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores){
+        BD.AgregarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores));
+        return RedirectToAction("Index", "Home");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

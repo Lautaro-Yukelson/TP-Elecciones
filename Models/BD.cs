@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace TP_Elecciones
 {
-    public class BD{
+    public static class BD{
         private static string _connectionString = @"Server=localhost;DataBase=Elecciones2023;Trusted_Connection=True;";
         private static List<Candidato> _ListadoCandidatos = new List<Candidato>{};
         private static List<Partido> _ListadoPartidos = new List<Partido>{};
@@ -29,7 +29,15 @@ namespace TP_Elecciones
             string sql = "INSERT INTO Candidatos(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion) VALUES (@pidPartido, @pApellido, @pNombre, @pFechaNacimiento, @pFoto, @pPostulacion)";
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                db.Execute(sql, new { idPartido = can.idPartido, pApellido = can.Apellido, pNombre = can.Nombre, pFechaNacimiento = can.FechaNacimiento, pFoto = can.Foto, pPostulacion = can.Postulacion});
+                db.Execute(sql, new { pidPartido = can.idPartido, pApellido = can.Apellido, pNombre = can.Nombre, pFechaNacimiento = can.FechaNacimiento, pFoto = can.Foto, pPostulacion = can.Postulacion});
+            }
+        }
+
+        public static void AgregarPartido(Partido par){
+            string sql = "INSERT INTO Partidos(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores) VALUES (@pNombre, @pLogo, @pSitioWeb, @pFechaFundacion, @pCantidadDiputados, @pCantidadSenadores)";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                db.Execute(sql, new { pNombre = par.Nombre, pLogo = par.Logo, pSitioWeb = par.SitioWeb, pFechaFundacion = par.FechaFundacion, pCantidadDiputados = par.CantidadDiputados, pCantidadSenadores = par.CantidadSenadores});
             }
         }
 
