@@ -3,18 +3,20 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenido! Estos son los partidos actuales!</h1>
+    <br>
 </div>
 
-
-
 <div class="cards-partidos__container">
-    <div class="card-partido">
-        <div>
-            <img class="hero-image" src="/assets/images/partidos/la-libertad-avanza.webp" alt="img banda"/>
-            <div class="card-partido__linea"></div>
-        </div>
-        <h2 class="card-partido__title">La Libertad Avanza</h2>
-    </div>
+    @{
+        for(int i = 0; i<ViewBag.cantidad; i++){
+            <div class="card-partido">
+                <div>
+                    <img class="hero-image" src="@ViewBag.ListaPartidos[i].Logo" alt="Logo Partido"/>
+                    <div class="card-partido__linea"></div>
+                </div>
+                <h2 class="card-partido__title">@ViewBag.ListaPartidos[i].Nombre</h2>
+            </div>
+        }
+    }
 </div>  

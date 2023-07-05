@@ -15,6 +15,7 @@ public class HomeController : Controller
     public IActionResult Index(){
         BD.LevantarPartidos();
         ViewBag.ListaPartidos = BD.ListarPartidos();
+        ViewBag.cantidad = BD.GetCantPartidos();
         return View();
     }
 
