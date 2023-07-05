@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
 <div class="text-center">
@@ -10,13 +10,18 @@
 <div class="cards-partidos__container">
     @{
         for(int i = 0; i<ViewBag.cantidad; i++){
-            <div class="card-partido">
-                <div>
-                    <img class="hero-image" src="@ViewBag.ListaPartidos[i].Logo" alt="Logo Partido"/>
-                    <div class="card-partido__linea"></div>
-                </div>
-                <h2 class="card-partido__title">@ViewBag.ListaPartidos[i].Nombre</h2>
-            </div>
+            <form action="~/Home/VerDetallePartido" method="post">
+                <button type="submit">
+                    <div class="card-partido">
+                            <div>
+                                <input type="number" name="idPartido" value="@ViewBag.ListaPartidos[i].idPartido" hidden>
+                                <img class="hero-image" src="@ViewBag.ListaPartidos[i].Logo" alt="Logo Partido" width="400"/>
+                                <div class="card-partido__linea"></div>
+                            </div>
+                            <h2 class="card-partido__title">@ViewBag.ListaPartidos[i].Nombre</h2>
+                    </div>
+                </button>
+            </form>
         }
     }
 </div>  

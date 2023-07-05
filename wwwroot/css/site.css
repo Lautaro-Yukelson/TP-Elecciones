@@ -21,6 +21,11 @@ body {
   margin-bottom: 60px;
 }
 
+.cards-partidos__container{
+  display: flex;
+  justify-content: space-between;
+}
+
 .card-partido{
   width: fit-content;
   padding: 20px 40px;
