@@ -3,7 +3,7 @@
     @{
         for(int i = 0; i<ViewBag.cantidad; i++){
             <form action="~/Home/VerDetalleCandidato" method="post">
-                <button type="submit">
+                <button type="submit"  class="card-button">
                     <div class="card-partido">
                         <div>
                             <input type="number" name="idCandidato" value="@ViewBag.candidatos[i].idCandidato" hidden>

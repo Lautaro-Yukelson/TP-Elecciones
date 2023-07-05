@@ -21,9 +21,20 @@ body {
   margin-bottom: 60px;
 }
 
+.no-margin {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.card-button{
+  border: none;
+  border-radius: 50px;
+  background-color: transparent;
+}
+
 .cards-partidos__container{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .card-partido{
