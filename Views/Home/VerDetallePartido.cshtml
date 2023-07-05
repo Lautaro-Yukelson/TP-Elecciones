@@ -1,1 +1,19 @@
 <h1>Hola @ViewBag.infoPartido.idPartido</h1>
+<div class="cards-partidos__container">
+    @{
+        for(int i = 0; i<ViewBag.cantidad; i++){
+            <form action="~/Home/VerDetalleCandidato" method="post">
+                <button type="submit">
+                    <div class="card-partido">
+                        <div>
+                            <input type="number" name="idCandidato" value="@ViewBag.candidatos[i].idCandidato" hidden>
+                            <img class="hero-image" src="@ViewBag.candidatos[i].Foto" alt="Foto Candidato" width="400"/>
+                            <div class="card-partido__linea"></div>
+                        </div>
+                        <h2 class="card-partido__title">@ViewBag.candidatos[i].Nombre @ViewBag.candidatos[i].Apellido</h2>
+                    </div>
+                </button>
+            </form>
+        }
+    }
+</div> 

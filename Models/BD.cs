@@ -72,6 +72,16 @@ namespace TP_Elecciones
             return _ListadoPartidos.Count();
         }
 
+        public static int GetCantCandidatos(int idPartido){
+            int cont = 0;
+            for (int i = 0; i<_ListadoCandidatos.Count(); i++){
+                if (_ListadoCandidatos[i].idPartido == idPartido){
+                    cont++;
+                }
+            }
+            return cont;
+        }
+
         public static List<Candidato> ListarCandidatos(int idPartido){
             List<Candidato> listaADevolver = new List<Candidato>{};
             for (int i = 0; i<_ListadoCandidatos.Count(); i++){

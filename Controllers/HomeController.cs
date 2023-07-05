@@ -22,7 +22,10 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult VerDetallePartido(int idPartido){
         BD.LevantarPartidos();
+        BD.LevantarCandidatos();
         ViewBag.infoPartido = BD.VerInfoPartido(idPartido);
+        ViewBag.candidatos = BD.ListarCandidatos(idPartido);
+        ViewBag.cantidad = BD.GetCantCandidatos(idPartido);
         return View();
     }
 
