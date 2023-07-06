@@ -10,18 +10,18 @@
 <div class="cards-partidos__container">
     @{
         for(int i = 0; i<ViewBag.cantidad; i++){
-            <form action="~/Home/VerDetallePartido" method="post">
-                <button type="submit" class="card-button">
-                    <div class="card-partido">
-                            <div>
-                                <input type="number" name="idPartido" value="@ViewBag.ListaPartidos[i].idPartido" hidden>
-                                <img class="hero-image" src="@ViewBag.ListaPartidos[i].Logo" alt="Logo Partido" width="400"/>
-                                <div class="card-partido__linea"></div>
-                            </div>
-                            <h2 class="card-partido__title">@ViewBag.ListaPartidos[i].Nombre</h2>
-                    </div>
-                </button>
-            </form>
+            <a href='@Url.Action("VerDetallePartido", "Home", new { idPartido = @ViewBag.ListaPartidos[i].idPartido })' class="cardP">
+                <img src="@ViewBag.ListaPartidos[i].Logo" alt="balloon with an emoji face" class="cardP__img">
+                <span class="cardP__footer">
+                    <span>@ViewBag.ListaPartidos[i].Nombre</span>
+                    <span>2023</span>
+                </span>
+                <span class="cardP__action">
+                    <svg viewBox="0 0 448 512" title="play">
+                        <path d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" />
+                    </svg>
+                </span>
+            </a>  
         }
     }
 </div>  
