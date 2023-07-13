@@ -1,0 +1,31 @@
+<form class="formulario">
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Seleccionar partido</label>
+        <select class="form-control" id="exampleFormControlSelect1" name="idPartido">
+            @for (int i = 0; i<ViewBag.cant; i++){
+                <option value="@ViewBag.Partidos[i].idPartido">@ViewBag.Partidos[i].Nombre</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="forApellido">Apellido</label>
+        <input type="text" class="form-control" name="Apellido" placeholder="Apellido" id="forApellido">
+    </div>
+    <div class="form-group">
+        <label for="forNombre">Nombre</label>
+        <input type="text" class="form-control" name="Nombre" placeholder="Apellido" id="forNombre">
+    </div>
+    <div class="form-group">
+        <label for="forFecha">Fecha de Nacimiento</label>
+        <input type="date" class="form-control" name="FechaNacimiento" id="forFecha">
+    </div>
+    <div class="form-group">
+        <label for="forFecha">Link a la foto</label>
+        <input type="text" class="form-control" name="Foto" placeholder="Foto" id="forFoto">
+    </div>
+    <div class="form-group">
+        <label for="forFecha">Postulacion</label>
+        <input type="text" class="form-control" name="Foto" placeholder="Foto" id="forPostulacion">
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>

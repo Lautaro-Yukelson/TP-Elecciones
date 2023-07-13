@@ -34,6 +34,8 @@ public class HomeController : Controller
     }
 
     public IActionResult AgregarCandidato(){
+        ViewBag.Partidos = BD.ListarPartidos();
+        ViewBag.cant = BD.GetCantPartidos();
         return View();
     }
 
