@@ -176,7 +176,7 @@ a, a:hover{
   z-index: 2;
 }
 
-.cardC.light-blue .additional {
+.cardC.color .additional {
   background: linear-gradient(#77ACDC, #87B3DC);
 }
 
@@ -237,7 +237,7 @@ a, a:hover{
   margin-bottom: 0;
 }
 
-.cardC.light-blue .additional .more-info h1 {
+.cardC.color .additional .more-info h1 {
   color: #1C609E;
 }
 
@@ -247,7 +247,7 @@ a, a:hover{
   font-size: 1rem;
 }
 
-.cardC.light-blue .additional .coords {
+.cardC.color .additional .coords {
   color: #1C609E;
   font-weight: 400;
 }
@@ -267,7 +267,7 @@ a, a:hover{
   color: #fff;
 }
 
-.cardC.light-blue .additional .stats {
+.cardC.color .additional .stats {
   color: #1C609E;
 }
 
