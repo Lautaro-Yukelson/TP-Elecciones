@@ -3,7 +3,7 @@
   
 </style>
 <h1>Hola @ViewBag.infoPartido.idPartido</h1>
-<div class="cards-partidos__container @view">
+<div class="cards-partidos__container">
     @{
         for(int i = 0; i < ViewBag.cantidad; i++){
             DateTime fechaNacimiento = ViewBag.candidatos[i].FechaNacimiento;
