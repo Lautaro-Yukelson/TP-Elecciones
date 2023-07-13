@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Drawing;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP_Elecciones.Models;
 
@@ -50,8 +51,8 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult GuardarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores){
-        BD.AgregarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores));
+    public IActionResult GuardarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores, string ColorPrimario, string ColorSecundario){
+        BD.AgregarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores, ColorPrimario, ColorSecundario));
         return RedirectToAction("Index", "Home");
     }
 
