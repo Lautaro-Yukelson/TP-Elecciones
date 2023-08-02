@@ -1,10 +1,30 @@
 <style>
     /*background-color: @ViewBag.infoPartido.ColorPrimario;*/
-    .cardC.color .additional {
-        background: @ViewBag.infoPartido.ColorPrimario ;
+    .cardC.color .additional, .mainP{
+        background: @ViewBag.infoPartido.ColorPrimario;
+    }
+    .cardC.color .additional .coords, .cardC.color .additional .more-info h1, .cardC.color .additional .stats{
+        color: #fff;
     }
 </style>
-<h1>@ViewBag.infoPartido.Nombre</h1>
+<div class="mainP">
+<img src=@ViewBag.infoPartido.Logo alt="logo partido" width="500">
+    <div class="stats">                        
+        <div>
+            <div class="title">Diputados</div>
+            <i class="fa fa-trophy"></i>
+            <div class="value">@ViewBag.infoPartido.CantidadDiputados</div>
+        </div>
+        <div>
+            <div class="title">Senadores</div>
+            <i class="fa fa-gamepad"></i>
+            <div class="value">@ViewBag.infoPartido.CantidadSenadores</div>
+        </div>
+        <div>   
+            <div class="value"><a href=@ViewBag.infoPartido.SitioWeb>Visita el sitio web!</a></div>
+        </div>
+    </div>
+</div>
 <div class="cards-partidos__container">
     @{
         for(int i = 0; i < ViewBag.cantidad; i++){
@@ -24,31 +44,24 @@
                 </div>
                 <div class="more-info">
                     <h1>@ViewBag.candidatos[i].Nombre @ViewBag.candidatos[i].Apellido</h1>
-                    <div class="coords">
-                    <span>Fecha Nacimiento</span>
-                    <span>@fechaNacimiento.ToString("dd/MM/yyyy")</span>
-                    </div>
-                    <div class="coords">
-                    <span>Postulación</span>
-                    <span>@ViewBag.candidatos[i].Postulacion</span>
-                    </div>
-                    <div class="stats">                        
-                        <div>
-                            <div class="title">Diputados</div>
-                            <i class="fa fa-trophy"></i>
-                            <div class="value">@ViewBag.infoPartido.CantidadDiputados</div>
+                    <div class="coords__container">
+                        <div class="coords">
+                            <span>Fecha Nacimiento</span>
+                            <span>@fechaNacimiento.ToString("dd/MM/yyyy")</span>
                         </div>
-                        <div>
-                            <div class="title">Senadores</div>
-                            <i class="fa fa-gamepad"></i>
-                            <div class="value">@ViewBag.infoPartido.CantidadSenadores</div>
+                        <div class="coords">
+                            <span>Postulación</span>
+                            <span>@ViewBag.candidatos[i].Postulacion</span>
                         </div>
-                        <div>
-                            <div class="title">Votos</div>
-                            <i class="fa fa-group"></i>
-                            <div class="value">999</div>
                         </div>
-                    </div>
+                        <div class="stats">                        
+                            <div>
+                                <div class="title">Votos</div>
+                                <i class="fa fa-group"></i>
+                                <div class="value">999</div>
+                            </div>
+                            <img src="/assets/svgs/icons8-edit-64.png" alt="" width="30" height="30">
+                        </div>
                 </div>
                 </div>
                 <div class="general">
