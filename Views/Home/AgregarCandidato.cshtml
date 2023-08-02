@@ -1,6 +1,5 @@
-<div class="formulario">
-  <h2>Agregar Candidato</h2>
-  <form action="GuardarCandidato" method="post">
+<form action="GuardarCandidato" method="post" class="formulario">
+    <h2>Agregar Candidato</h2>
     <div class="form-box select-box">
         <select class="form-control" id="exampleFormControlSelect1" name="idPartido">
             @for (int i = 0; i<ViewBag.cant; i++){
@@ -8,32 +7,10 @@
             }
         </select>
     </div>
-    <div class="form-box">
-        <input type="text" name="Apellido" required>
-        <label >Apellido</label>
-    </div>
-    <div class="form-box">
-        <input type="text" name="Nombre" required>
-        <label >Nombre</label>
-    </div>
-    <div class="form-box">
-        <input type="date" name="FechaNacimiento" required>
-        <label class="active">FechaNacimiento</label>
-    </div>
-    <div class="form-box">
-        <input type="text" name="Foto" required>
-        <label>Foto (Link)</label>
-    </div>
-    <div class="form-box">
-        <input type="text" name="Postulacion" required>
-        <label>Postulacion</label>
-    </div>
-    <button type="submit">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      Submit
-    </button>
-  </form>
-</div>
+    <input type="text" class="form-control" name="Apellido" placeholder="Apellido">
+    <input type="text" class="form-control" name="Nombre" placeholder="Nombre" >
+    <input type="date" class="form-control" name="FechaNacimiento" placeholder="Fecha de nacimiento">  
+    <input type="text" class="form-control" name="Foto" placeholder="Foto (Link)">
+    <input type="text" class="form-control" name="Postulacion" placeholder="Postulacion">
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>

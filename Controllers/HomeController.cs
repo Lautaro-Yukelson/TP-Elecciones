@@ -20,6 +20,11 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult VerDetalleCandidato(int idCandidato){
+        BD.LevantarCandidatos();
+        ViewBag.infoCandidato = BD.VerInfoCandidato(idCandidato);
+        return View();
+    }
     public IActionResult VerDetallePartido(int idPartido){
         BD.LevantarPartidos();
         BD.LevantarCandidatos();
@@ -28,11 +33,7 @@ public class HomeController : Controller
         ViewBag.cantidad = BD.GetCantCandidatos(idPartido);
         return View();
     }
-    public IActionResult VerDetalleCandidato(int idCandidato){
-        BD.LevantarCandidatos();
-        ViewBag.infoCandidato = BD.VerInfoCandidato(idCandidato);
-        return View();
-    }
+    
 
     public IActionResult AgregarCandidato(){
         ViewBag.Partidos = BD.ListarPartidos();

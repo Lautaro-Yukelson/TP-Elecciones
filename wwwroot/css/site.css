@@ -389,7 +389,7 @@ a, a:hover{
   margin-bottom: 50px;
 }
 
-/******************************************* Agregar Candidato *******************************************/
+/******************************************* Formularios *******************************************/
 .formulario {
   position: absolute;
   top: 50%;
@@ -426,6 +426,14 @@ a, a:hover{
 .formulario .select-box select option{
   background: rgba(245, 245, 245, 0.85);
   color: #000;
+}
+
+.formulario input{
+  margin-top: 10px;
+}
+
+.formulario button{
+  margin-top: 10px;
 }
 
 .formulario .form-box input {
