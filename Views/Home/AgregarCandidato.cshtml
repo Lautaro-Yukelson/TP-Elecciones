@@ -1,31 +1,39 @@
-<form class="formulario">
-    <div class="form-group">
-        <label for="exampleFormControlSelect1">Seleccionar partido</label>
+<div class="formulario">
+  <h2>Agregar Candidato</h2>
+  <form action="GuardarCandidato" method="post">
+    <div class="form-box select-box">
         <select class="form-control" id="exampleFormControlSelect1" name="idPartido">
             @for (int i = 0; i<ViewBag.cant; i++){
                 <option value="@ViewBag.Partidos[i].idPartido">@ViewBag.Partidos[i].Nombre</option>
             }
         </select>
     </div>
-    <div class="form-group">
-        <label for="forApellido">Apellido</label>
-        <input type="text" class="form-control" name="Apellido" placeholder="Apellido" id="forApellido">
+    <div class="form-box">
+        <input type="text" name="Apellido" required>
+        <label >Apellido</label>
     </div>
-    <div class="form-group">
-        <label for="forNombre">Nombre</label>
-        <input type="text" class="form-control" name="Nombre" placeholder="Apellido" id="forNombre">
+    <div class="form-box">
+        <input type="text" name="Nombre" required>
+        <label >Nombre</label>
     </div>
-    <div class="form-group">
-        <label for="forFecha">Fecha de Nacimiento</label>
-        <input type="date" class="form-control" name="FechaNacimiento" id="forFecha">
+    <div class="form-box">
+        <input type="date" name="FechaNacimiento" required>
+        <label class="active">FechaNacimiento</label>
     </div>
-    <div class="form-group">
-        <label for="forFecha">Link a la foto</label>
-        <input type="text" class="form-control" name="Foto" placeholder="Foto" id="forFoto">
+    <div class="form-box">
+        <input type="text" name="Foto" required>
+        <label>Foto (Link)</label>
     </div>
-    <div class="form-group">
-        <label for="forFecha">Postulacion</label>
-        <input type="text" class="form-control" name="Foto" placeholder="Foto" id="forPostulacion">
+    <div class="form-box">
+        <input type="text" name="Postulacion" required>
+        <label>Postulacion</label>
     </div>
-    <button type="submit" class="btn btn-primary">Enviar</button>
-</form>
+    <button type="submit">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Submit
+    </button>
+  </form>
+</div>

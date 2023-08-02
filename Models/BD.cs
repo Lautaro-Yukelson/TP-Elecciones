@@ -34,10 +34,10 @@ namespace TP_Elecciones
         }
 
         public static void AgregarPartido(Partido par){
-            string sql = "INSERT INTO Partidos(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores) VALUES (@pNombre, @pLogo, @pSitioWeb, @pFechaFundacion, @pCantidadDiputados, @pCantidadSenadores)";
+            string sql = "INSERT INTO Partidos(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores, ColorPrimario, ColorSecundario) VALUES (@pNombre, @pLogo, @pSitioWeb, @pFechaFundacion, @pCantidadDiputados, @pCantidadSenadores, @pColorPrimario, @pColorSecundario)";
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                db.Execute(sql, new { pNombre = par.Nombre, pLogo = par.Logo, pSitioWeb = par.SitioWeb, pFechaFundacion = par.FechaFundacion, pCantidadDiputados = par.CantidadDiputados, pCantidadSenadores = par.CantidadSenadores});
+                db.Execute(sql, new { pNombre = par.Nombre, pLogo = par.Logo, pSitioWeb = par.SitioWeb, pFechaFundacion = par.FechaFundacion, pCantidadDiputados = par.CantidadDiputados, pCantidadSenadores = par.CantidadSenadores, pColorPrimario = par.ColorPrimario, pColorSecundario = par.ColorSecundario});
             }
         }
 
