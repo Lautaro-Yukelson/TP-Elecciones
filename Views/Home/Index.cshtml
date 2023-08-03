@@ -3,8 +3,11 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bienvenido! Estos son los partidos actuales!</h1>
-    <br>
+    <div class="text-center">
+        <h1 class="display-4">Bienvenido!</h1>
+        <h2 class="display-5">Estos son los partidos actuales</h2>
+    </div>
+    
 </div>
 
 <div class="cards-partidos__container">
@@ -16,7 +19,9 @@
                     <span>@ViewBag.ListaPartidos[i].Nombre</span>
                     <span>2023</span>
                 </span>
-                
+                <span class="cardP__action">
+                    <img src="/assets/svgs/icono.png" alt="" width="40" height="40">
+                </span>
             </a>  
         }
     }
