@@ -1,4 +1,8 @@
-﻿using System.Drawing;
+﻿using System.Runtime.InteropServices.WindowsRuntime;
+using System.ComponentModel;
+using System.IO.Compression;
+using System.Net;
+using System.Drawing;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TP_Elecciones.Models;
@@ -14,29 +18,25 @@ public class HomeController : Controller
     }
 
     public IActionResult Index(){
-        BD.LevantarPartidos();
-        ViewBag.ListaPartidos = BD.ListarPartidos();
+        ViewBag.ListaPartidos = BD.LevantarPartidos();
         ViewBag.cantidad = BD.GetCantPartidos();
         return View();
     }
 
     public IActionResult VerDetalleCandidato(int idCandidato){
-        BD.LevantarCandidatos();
         ViewBag.infoCandidato = BD.VerInfoCandidato(idCandidato);
         return View();
     }
+
     public IActionResult VerDetallePartido(int idPartido){
-        BD.LevantarPartidos();
-        BD.LevantarCandidatos();
         ViewBag.infoPartido = BD.VerInfoPartido(idPartido);
-        ViewBag.candidatos = BD.ListarCandidatos(idPartido);
+        ViewBag.candidatos = BD.LevantarCandidatos(idPartido);
         ViewBag.cantidad = BD.GetCantCandidatos(idPartido);
         return View();
     }
-    
 
     public IActionResult AgregarCandidato(){
-        ViewBag.Partidos = BD.ListarPartidos();
+        ViewBag.Partidos = BD.LevantarPartidos();
         ViewBag.cant = BD.GetCantPartidos();
         return View();
     }
@@ -45,6 +45,13 @@ public class HomeController : Controller
     public IActionResult GuardarCandidato(int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion){
         BD.AgregarCandidato(new Candidato(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion));
         return RedirectToAction("VerDetallePartido", new { idPartido = idPartido });
+    }
+
+    [HttpPost]
+    public IActionResult ActualizarCandidato(int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion){
+        int idCandidato = 3;
+        BD.ActualizarCandidato(new Candidato(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion));
+        return RedirectToAction("VerDetalleCandidato", new {idCandidato = idCandidato});
     }
 
     public IActionResult AgregarPartido(){
@@ -57,6 +64,18 @@ public class HomeController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    public IActionResult ActualizarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores, string ColorPrimario, string ColorSecundario){
+        BD.ActualizarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores, ColorPrimario, ColorSecundario));
+        return RedirectToAction("Index", "Home");
+    }
+
+    public IActionResult Elecciones(){
+        return View();
+    }
+
+    public IActionResult Creditos(){
+        return View();
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error(){

@@ -1,3 +1,10 @@
+using System.Reflection.Metadata.Ecma335;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Threading;
+using System.ComponentModel;
+using System.Data.SqlTypes;
 using Dapper;
 using System.Data.SqlClient;
 
@@ -6,22 +13,20 @@ namespace TP_Elecciones
 {
     public static class BD{
         private static string _connectionString = @"Server=localhost;DataBase=Elecciones2023;Trusted_Connection=True;";
-        private static List<Candidato> _ListadoCandidatos = new List<Candidato>{};
-        private static List<Partido> _ListadoPartidos = new List<Partido>{};
 
-        public static void LevantarCandidatos(){
-            string sql = "SELECT * FROM Candidatos";
+        public static List<Candidato> LevantarCandidatos(int idPartido){
+            string sql = "SELECT * FROM Candidatos WHERE idPartido = @idPartido";
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                _ListadoCandidatos = db.Query<Candidato>(sql).ToList();
+                return db.Query<Candidato>(sql, new {idPartido = idPartido}).ToList();
             }
         }
 
-        public static void LevantarPartidos(){
+        public static List<Partido> LevantarPartidos(){
             string sql = "SELECT * FROM Partidos";
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                _ListadoPartidos = db.Query<Partido>(sql).ToList();
+                return db.Query<Partido>(sql).ToList();
             }
         }
 
@@ -50,44 +55,56 @@ namespace TP_Elecciones
             }
         }
 
-        public static Partido VerInfoPartido(int idPartido){
-            for (int i = 0; i<_ListadoPartidos.Count(); i++){
-                if (_ListadoPartidos[i].idPartido == idPartido) { return _ListadoPartidos[i]; }
+        public static void EliminarPartido(int idAEliminar){
+            string sql = "DELETE FROM Partidos WHERE idPartido = @id";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                db.Execute(sql, new {id = idAEliminar});
             }
-            return null;
+        }
+
+        public static void ActualizarCandidato(Candidato can){
+            string sql = "UPDATE Candidatos SET idPartido = @nIdPartido, Apellido = @nApellido, Nombre = @nNombre, FechaNacimiento = @nFechaNacimiento, Foto = @nFoto, Postulacion = @nPostulacion WHERE idCandidato = @id;";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                db.Execute(sql, new {id = can.idCandidato, nIdPartido = can.idPartido, nApellido = can.Apellido, nNombre = can.Nombre, nFechaNacimiento = can.FechaNacimiento, nFoto = can.Foto, nPostulacion = can.Postulacion});
+            }
+        }
+
+        public static void ActualizarPartido(Partido par){
+            string sql = "UPDATE Partidos SET Nombre = @nNombre, Logo = @nLogo, SitioWeb = @nSitioWeb, FechaFundacion = @nFechaFundacion, CantidadDiputados = @nCantidadDiputados, CantidadSenadores = @nCantidadSenadores, ColorPrimario = @nColorPrimario, ColorSecundario = @nColorSecundario WHERE idPartido = @id;";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                db.Execute(sql, new {id = par.idPartido, nNombre = par.Nombre, nLogo = par.Logo, nSitioWeb = par.SitioWeb, nFechaFundacion = par.FechaFundacion, nCantidadDiputados = par.CantidadDiputados, nCantidadSenadores = par.CantidadSenadores, nColorPrimario = par.ColorPrimario, nColorSecundario = par.ColorSecundario});
+            }
+        }
+
+        public static Partido VerInfoPartido(int idPartido){
+            string sql = "SELECT * FROM Partidos WHERE idPartido = @id";
+            using (SqlConnection db = new SqlConnection(_connectionString)){
+                return db.Query<Partido>(sql, new { id = idPartido }).SingleOrDefault();
+            }
         }
 
         public static Candidato VerInfoCandidato(int idCandidato){
-            for (int i = 0; i<_ListadoCandidatos.Count(); i++){
-                if (_ListadoCandidatos[i].idCandidato == idCandidato) { return _ListadoCandidatos[i]; }
+            string sql = "SELECT * FROM Candidatos WHERE idCandidato = @id";
+            using (SqlConnection db = new SqlConnection(_connectionString)){
+                return db.Query<Candidato>(sql, new { id = idCandidato }).SingleOrDefault();
             }
-            return null;
-        }
-
-        public static List<Partido> ListarPartidos(){
-            return _ListadoPartidos;
-        }
-
-        public static int GetCantPartidos(){
-            return _ListadoPartidos.Count();
         }
 
         public static int GetCantCandidatos(int idPartido){
-            int cont = 0;
-            for (int i = 0; i<_ListadoCandidatos.Count(); i++){
-                if (_ListadoCandidatos[i].idPartido == idPartido){
-                    cont++;
-                }
+            string sql = "SELECT COUNT(*) FROM Candidatos WHERE idPartido = @id";
+            using (SqlConnection db = new SqlConnection(_connectionString)){
+                return db.QuerySingle<int>(sql, new { id = idPartido });
             }
-            return cont;
         }
 
-        public static List<Candidato> ListarCandidatos(int idPartido){
-            List<Candidato> listaADevolver = new List<Candidato>{};
-            for (int i = 0; i<_ListadoCandidatos.Count(); i++){
-                if (_ListadoCandidatos[i].idPartido == idPartido){ listaADevolver.Add(_ListadoCandidatos[i]); }
+        public static int GetCantPartidos(){
+            string sql = "SELECT COUNT(*) FROM Partidos";
+            using (SqlConnection db = new SqlConnection(_connectionString)){
+                return db.QuerySingle<int>(sql);
             }
-            return listaADevolver;
         }
     }
 }

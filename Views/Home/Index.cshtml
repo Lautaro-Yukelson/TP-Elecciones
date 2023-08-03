@@ -14,7 +14,7 @@
     @{
         for(int i = 0; i<ViewBag.cantidad; i++){
             <a href='@Url.Action("VerDetallePartido", "Home", new { idPartido = @ViewBag.ListaPartidos[i].idPartido })' class="cardP">
-                <img src="@ViewBag.ListaPartidos[i].Logo" alt="balloon with an emoji face" class="cardP__img">
+                <img src="@ViewBag.ListaPartidos[i].Logo" alt="Logo del Partido" class="cardP__img">
                 <span class="cardP__footer">
                     <span>@ViewBag.ListaPartidos[i].Nombre</span>
                     <span>2023</span>
@@ -22,7 +22,7 @@
                 <span class="cardP__action">
                     <img src="/assets/svgs/icono.png" alt="" width="40" height="40">
                 </span>
-            </a>  
+            </a>
         }
     }
-</div>  
+</div>
