@@ -12,17 +12,53 @@
 
 <div class="cards-partidos__container">
     @{
-        for(int i = 0; i<ViewBag.cantidad; i++){
-            <a href='@Url.Action("VerDetallePartido", "Home", new { idPartido = @ViewBag.ListaPartidos[i].idPartido })' class="cardP">
-                <img src="@ViewBag.ListaPartidos[i].Logo" alt="Logo del Partido" class="cardP__img">
+        foreach(Partido partido in ViewBag.ListaPartidos){
+            <a onclick="checkModalClick(event, '@Url.Action("VerDetallePartido", "Home", new { idPartido = @partido.idPartido })')" class="cardP">
+                <img src="@partido.Logo" alt="Logo del Partido" class="cardP__img">
                 <span class="cardP__footer">
-                    <span>@ViewBag.ListaPartidos[i].Nombre</span>
+                    <span>@partido.Nombre</span>
                     <span>2023</span>
                 </span>
-                <span class="cardP__action">
+                <button class="cardP__action" type="button" data-bs-toggle="modal" data-bs-target="#modal@(partido.idPartido)" >
                     <img src="/assets/svgs/icono.png" alt="" width="40" height="40">
-                </span>
+                </button>
             </a>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal@(partido.idPartido)" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form action="@Url.Action("ActualizarPartido", "Home")" method="post" class="formulario actualizar">
+                            <h2>Actualizar Partido</h2>
+                            <input type="number" name="idPartido" value="@partido.idPartido" hidden required>
+                            <input type="text" class="form-control" name="Nombre" placeholder="Nombre" value="@partido.Nombre" required>
+                            <input type="text" class="form-control" name="Logo" placeholder="Logo (Link)" value="@partido.Logo" required>
+                            <input type="text" class="form-control" name="SitioWeb" placeholder="Sitio Web (Link)" value="@partido.SitioWeb" required>
+                            <input type="date" class="form-control" name="FechaFundacion"value="@partido.FechaFundacion.ToString("yyyy-MM-dd")" required>
+                            <input type="number" class="form-control" name="CantidadDiputados" placeholder="Cantidad de Diputados" value="@partido.CantidadDiputados" required>
+                            <input type="number" class="form-control" name="CantidadSenadores" placeholder="Cantidad de Senadores" value="@partido.CantidadSenadores" required>
+                            <input type="color" class="form-control" name="ColorPrimario" placeholder="Color Primario" value="@partido.ColorPrimario" required>
+                            <input type="color" class="form-control" name="ColorSecundario" placeholder="Color Secundario" value="@partido.ColorSecundario" required>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <a href='@Url.Action("EliminarPartido", "Home", new { idPartido = @partido.idPartido })' class="btn btn-danger">Eliminar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
         }
     }
 </div>
+
+<script>
+    function checkModalClick(event, url) {
+        const cardButton = event.target.closest('.cardP');
+        
+        const modalButton = event.target.closest('.cardP__action');
+        
+        if (modalButton) {
+            event.stopPropagation();
+        } else {
+            window.location.href = url;
+        }
+    }
+</script>

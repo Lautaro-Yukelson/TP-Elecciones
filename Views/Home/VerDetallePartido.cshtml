@@ -1,5 +1,4 @@
 <style>
-    /*background-color: @ViewBag.infoPartido.ColorPrimario;*/
     .cardC.color .additional, .mainP{
         background: @ViewBag.infoPartido.ColorPrimario;
     }
@@ -27,8 +26,8 @@
 </div>
 <div class="cards-partidos__container">
     @{
-        for(int i = 0; i < ViewBag.cantidad; i++){
-            DateTime fechaNacimiento = ViewBag.candidatos[i].FechaNacimiento;
+        foreach(Candidato candidato in ViewBag.Candidatos){
+            DateTime fechaNacimiento = candidato.FechaNacimiento;
             int edad = DateTime.Now.Year - fechaNacimiento.Year;
             if (DateTime.Now < fechaNacimiento.AddYears(edad)) { edad--; }
             <div class="cardC color">
@@ -38,12 +37,12 @@
                             @edad años
                         </div>
                     <div class="points center">
-                        @ViewBag.candidatos[i].Postulacion
+                        @candidato.Postulacion
                     </div>
-                    <img width="110" height="110" viewBox="0 0 250 250" src="@ViewBag.candidatos[i].Foto" role="img" aria-labelledby="title desc" class="center img-perfil">
+                    <img width="110" height="110" viewBox="0 0 250 250" src="@candidato.Foto" role="img" aria-labelledby="title desc" class="center img-perfil">
                 </div>
                 <div class="more-info">
-                    <h1>@ViewBag.candidatos[i].Nombre @ViewBag.candidatos[i].Apellido</h1>
+                    <h1>@candidato.Nombre @candidato.Apellido</h1>
                     <div class="coords__container">
                         <div class="coords">
                             <span>Fecha Nacimiento</span>
@@ -51,7 +50,7 @@
                         </div>
                         <div class="coords">
                             <span>Postulación</span>
-                            <span>@ViewBag.candidatos[i].Postulacion</span>
+                            <span>@candidato.Postulacion</span>
                         </div>
                         </div>
                         <div class="stats">                        
@@ -60,12 +59,44 @@
                                 <i class="fa fa-group"></i>
                                 <div class="value">999</div>
                             </div>
-                            <img src="/assets/svgs/icons8-edit-64.png" alt="" width="30" height="30">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#modal@(candidato.idCandidato)" >
+                                <img src="/assets/svgs/icons8-edit-64.png" alt="" width="30" height="30">
+                            </button>
                         </div>
                 </div>
                 </div>
                 <div class="general">
-                    <h1>@ViewBag.candidatos[i].Nombre @ViewBag.candidatos[i].Apellido</h1>
+                    <h1>@candidato.Nombre @candidato.Apellido</h1>
+                </div>
+            </div>
+            
+            <!-- Modal -->
+            <div class="modal fade" id="modal@(candidato.idCandidato)" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form action="@Url.Action("ActualizarCandidato", "Home")" method="post" class="formulario actualizar">
+                            <h2>Actualizar Candidato</h2>
+                            <div class="form-box select-box">
+                            <select class="form-control" id="exampleFormControlSelect1" name="idPartido">
+                                @foreach(Partido partido in ViewBag.ListaPartidos){
+                                    if (candidato.idPartido == partido.idPartido){
+                                        <option selected value="@partido.idPartido">@partido.Nombre</option>
+                                    } else {
+                                        <option value="@partido.idPartido">@partido.Nombre</option>
+                                    }
+                                }
+                            </select>
+                            </div>
+                            <input type="number" name="idCandidato" value="@candidato.idCandidato" required hidden>
+                            <input type="text" class="form-control" name="Apellido" placeholder="Apellido" value="@candidato.Apellido" required>
+                            <input type="text" class="form-control" name="Nombre" placeholder="Nombre" value="@candidato.Nombre" required>
+                            <input type="date" class="form-control" name="FechaNacimiento" placeholder="Fecha de nacimiento" value="@candidato.FechaNacimiento.ToString("yyyy-MM-dd")" required>  
+                            <input type="text" class="form-control" name="Foto" placeholder="Foto (Link)" value="@candidato.Foto" required>
+                            <input type="text" class="form-control" name="Postulacion" placeholder="Postulacion" value="@candidato.Postulacion" required>
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <a href='@Url.Action("EliminarCandidato", "Home", new { idCandidato = @candidato.idCandidato, idPartido = @candidato.idPartido})' class="btn btn-danger">Eliminar</a>
+                        </form>
+                    </div>
                 </div>
             </div>
         }

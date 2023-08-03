@@ -2,15 +2,15 @@
     <h2>Agregar Candidato</h2>
     <div class="form-box select-box">
         <select class="form-control" id="exampleFormControlSelect1" name="idPartido">
-            @for (int i = 0; i<ViewBag.cant; i++){
-                <option value="@ViewBag.Partidos[i].idPartido">@ViewBag.Partidos[i].Nombre</option>
+            @foreach(Partido partido in ViewBag.ListaPartidos){
+                <option value="@partido.idPartido">@partido.Nombre</option>
             }
         </select>
     </div>
-    <input type="text" class="form-control" name="Apellido" placeholder="Apellido">
-    <input type="text" class="form-control" name="Nombre" placeholder="Nombre" >
-    <input type="date" class="form-control" name="FechaNacimiento" placeholder="Fecha de nacimiento">  
-    <input type="text" class="form-control" name="Foto" placeholder="Foto (Link)">
-    <input type="text" class="form-control" name="Postulacion" placeholder="Postulacion">
+    <input type="text" class="form-control" name="Apellido" placeholder="Apellido" required>
+    <input type="text" class="form-control" name="Nombre" placeholder="Nombre" required>
+    <input type="date" class="form-control" name="FechaNacimiento" placeholder="Fecha de nacimiento" required>  
+    <input type="text" class="form-control" name="Foto" placeholder="Foto (Link)" required>
+    <input type="text" class="form-control" name="Postulacion" placeholder="Postulacion" required>
     <button type="submit" class="btn btn-primary">Enviar</button>
 </form>

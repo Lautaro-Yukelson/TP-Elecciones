@@ -12,72 +12,90 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger){
+    public HomeController(ILogger<HomeController> logger)
+    {
         _logger = logger;
     }
 
-    public IActionResult Index(){
+    public IActionResult Index()
+    {
         ViewBag.ListaPartidos = BD.LevantarPartidos();
         ViewBag.cantidad = BD.GetCantPartidos();
         return View();
     }
 
-    public IActionResult VerDetalleCandidato(int idCandidato){
-        ViewBag.infoCandidato = BD.VerInfoCandidato(idCandidato);
-        return View();
-    }
-
-    public IActionResult VerDetallePartido(int idPartido){
+    public IActionResult VerDetallePartido(int idPartido)
+    {
+        ViewBag.ListaPartidos = BD.LevantarPartidos();
         ViewBag.infoPartido = BD.VerInfoPartido(idPartido);
         ViewBag.candidatos = BD.LevantarCandidatos(idPartido);
-        ViewBag.cantidad = BD.GetCantCandidatos(idPartido);
         return View();
     }
 
-    public IActionResult AgregarCandidato(){
-        ViewBag.Partidos = BD.LevantarPartidos();
-        ViewBag.cant = BD.GetCantPartidos();
+    public IActionResult AgregarCandidato()
+    {
+        ViewBag.ListaPartidos = BD.LevantarPartidos();
         return View();
     }
 
     [HttpPost]
-    public IActionResult GuardarCandidato(int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion){
+    public IActionResult GuardarCandidato(int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion)
+    {
         BD.AgregarCandidato(new Candidato(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion));
-        return RedirectToAction("VerDetallePartido", new { idPartido = idPartido });
+        return RedirectToAction("VerDetallePartido", new { idPartido });
     }
 
     [HttpPost]
-    public IActionResult ActualizarCandidato(int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion){
-        int idCandidato = 3;
-        BD.ActualizarCandidato(new Candidato(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion));
-        return RedirectToAction("VerDetalleCandidato", new {idCandidato = idCandidato});
+    public IActionResult ActualizarCandidato(int idCandidato, int idPartido, string Apellido, string Nombre, DateTime FechaNacimiento, string Foto, string Postulacion)
+    {
+        BD.ActualizarCandidato(new Candidato(idPartido, Apellido, Nombre, FechaNacimiento, Foto, Postulacion), idCandidato);
+        return RedirectToAction("VerDetallePartido", new { idPartido });
     }
 
-    public IActionResult AgregarPartido(){
+    public IActionResult EliminarCandidato(int idCandidato, int idPartido)
+    {
+        BD.EliminarCandidato(idCandidato);
+        return RedirectToAction("VerDetallePartido", new { idPartido });
+    }
+
+    public IActionResult AgregarPartido()
+    {
         return View();
     }
 
     [HttpPost]
-    public IActionResult GuardarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores, string ColorPrimario, string ColorSecundario){
+    public IActionResult GuardarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores, string ColorPrimario, string ColorSecundario)
+    {
         BD.AgregarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores, ColorPrimario, ColorSecundario));
         return RedirectToAction("Index", "Home");
     }
 
-    public IActionResult ActualizarPartido(string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores, string ColorPrimario, string ColorSecundario){
-        BD.ActualizarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores, ColorPrimario, ColorSecundario));
+    [HttpPost]
+    public IActionResult ActualizarPartido(int idPartido, string Nombre, string Logo, string SitioWeb, DateTime FechaFundacion, int CantidadDiputados, int CantidadSenadores, string ColorPrimario, string ColorSecundario)
+    {
+        BD.ActualizarPartido(new Partido(Nombre, Logo, SitioWeb, FechaFundacion, CantidadDiputados, CantidadSenadores, ColorPrimario, ColorSecundario), idPartido);
         return RedirectToAction("Index", "Home");
     }
 
-    public IActionResult Elecciones(){
+    public IActionResult EliminarPartido(int idPartido)
+    {
+        BD.EliminarPartido(idPartido);
+        return RedirectToAction("Index", "Home");
+    }
+
+    public IActionResult Elecciones()
+    {
         return View();
     }
 
-    public IActionResult Creditos(){
+    public IActionResult Creditos()
+    {
         return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error(){
+    public IActionResult Error()
+    {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
